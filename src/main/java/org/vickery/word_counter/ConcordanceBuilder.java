@@ -48,13 +48,7 @@ public class ConcordanceBuilder {
 	 */
 	public void printConcordance() throws IOException
 	{
-		HashMap<String, ConcordanceInfo> concordance = new HashMap<String, ConcordanceInfo>();
-		
-		String entireFileContents = getFileContents();
-		
-		ArrayList<String> allSentences = sentenceTokenizer.tokenizeSentences(entireFileContents);
-		
-		concordance = buildConcordance(concordance, allSentences);
+		HashMap<String, ConcordanceInfo> concordance = prepareConcordance();
 		
 		TreeSet<String> alphabetical = alphabetize(concordance);
 		
@@ -64,6 +58,18 @@ public class ConcordanceBuilder {
 		maxCardLength = (int)Math.log10(maxCardLength) + 2;
 		
 		printConcordanceToConsole(concordance, alphabetical, maxLength, maxCardLength);
+	}
+
+	HashMap<String, ConcordanceInfo> prepareConcordance() throws IOException 
+	{
+		HashMap<String, ConcordanceInfo> concordance = new HashMap<String, ConcordanceInfo>();
+		
+		String entireFileContents = getFileContents();
+		
+		ArrayList<String> allSentences = sentenceTokenizer.tokenizeSentences(entireFileContents);
+		
+		concordance = buildConcordance(concordance, allSentences);
+		return concordance;
 	}
 
 	/**
