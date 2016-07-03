@@ -1,0 +1,4 @@
+org/vickery/word_counter/ConcordanceInfo.class
+org/vickery/word_counter/SentenceTokenizer.class
+org/vickery/word_counter/ConcordanceBuilder.class
+org/vickery/word_counter/App.class
