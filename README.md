@@ -19,4 +19,5 @@ A simple utility for building a simple console-based concordance from an English
 * Similarly, spelling mistakes, absent whitespace, and words that have multiple representations have not been corrected.  A complete English lexicon with knowledge of the target domain would be preferable for maximal accuracy. Stemming and mining heuristics for inferring whitespace may also be beneficial, depending on the application.
 * Input text is a UTF-8 encoded text file
 * The exact output format is not a requirement for the final product.
-* This is a product of iterative development.
+* This is a product of iterative development, so further iteration would be performed upon feedback from the end-user
+* Note: The overall computational complexity is linear ~ O(n + m), where n = character count, and m = produced token count since each character needs to be visited for tokenization, and subsequent tokens and alphabetized, then printed.  
