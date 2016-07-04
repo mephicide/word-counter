@@ -27,6 +27,7 @@ public class ConcordanceBuilder {
 	
 	private File inputFile;
 	private SentenceTokenizer sentenceTokenizer;
+	private boolean useNLPWordDetection = false;
 	
 	/**
 	 * Initializes the sentence tokenizer and throw an IOException if there is an issue accessing the 
@@ -35,10 +36,11 @@ public class ConcordanceBuilder {
 	 * @param inputFile
 	 * @throws IOException
 	 */
-	public ConcordanceBuilder(File inputFile) throws IOException
+	public ConcordanceBuilder(File inputFile, boolean useNLPWordDetection) throws IOException
 	{
 		this.inputFile = inputFile;
 		this.sentenceTokenizer = new SentenceTokenizer();
+		this.useNLPWordDetection = useNLPWordDetection;
 	}
 
 	/**
@@ -181,7 +183,12 @@ public class ConcordanceBuilder {
 		for(int sentenceIndex=0; sentenceIndex<allSentences.size(); sentenceIndex++ )
 		{
 			String oneSentence = allSentences.get(sentenceIndex);
-			String[] words = oneSentence.split(" ");
+			String[] words = null;
+			if(useNLPWordDetection)
+				words = detectWords(oneSentence);
+			else
+				words = oneSentence.split(" ");
+			
 			for(int i=0; i< words.length; i++)
 			{
 				String normalized = normalize(words[i]);
@@ -196,6 +203,11 @@ public class ConcordanceBuilder {
 		}
 		
 		return concordance;
+	}
+
+	private String[] detectWords(String oneSentence) 
+	{
+		return sentenceTokenizer.tokenizeWords(oneSentence);
 	}
 
 	private String normalize(String word) 

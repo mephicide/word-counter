@@ -11,7 +11,7 @@ public class ConcordanceBuilderTest extends TestCase
 {
 	public void testConcordanceExample() throws IOException, URISyntaxException
 	{
-		ConcordanceBuilder builder = new ConcordanceBuilder(getInputFile());
+		ConcordanceBuilder builder = new ConcordanceBuilder(getInputFile(), false);
 		HashMap<String, ConcordanceInfo> concordance = builder.prepareConcordance();
 		
 		assertTrue("Concordance should contain 34 elements, but contains " + concordance.size(), concordance.size()==34);

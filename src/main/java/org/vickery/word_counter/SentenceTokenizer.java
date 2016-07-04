@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
+import opennlp.tools.tokenize.TokenizerME;
+import opennlp.tools.tokenize.TokenizerModel;
 
 /**
  * Turns a string representing an arbitrary English text document into a list of Strings which are
@@ -24,6 +26,7 @@ import opennlp.tools.sentdetect.SentenceModel;
 public class SentenceTokenizer 
 {
 	private SentenceDetectorME detector;
+	private TokenizerME wordDetector;
 	
 	/**
 	 * Initializes the SentenceDetector delegate class with embedded training data.
@@ -33,19 +36,19 @@ public class SentenceTokenizer
 	public SentenceTokenizer() throws IOException
 	{
 		InputStream modelIn = this.getClass().getResourceAsStream("en-sent.bin");
+		InputStream wordModelIn = this.getClass().getResourceAsStream("en-token.bin");
 
 		try {
 		 SentenceModel  model = new SentenceModel(modelIn);
+		 TokenizerModel wordModel = new TokenizerModel(wordModelIn);
 		 detector = new SentenceDetectorME(model);
+		 wordDetector = new TokenizerME(wordModel);
 		}
 		finally {
-		  if (modelIn != null) {
-		    try {
+		  if (modelIn != null)
 		      modelIn.close();
-		    }
-		    catch (IOException e) {
-		    }
-		  }
+		  if(wordModelIn!=null)
+			  wordModelIn.close();
 		}
 	}
 	
@@ -64,5 +67,10 @@ public class SentenceTokenizer
 			answer.add(sentences[i]);
 		}
 		return answer;
+	}
+	
+	public String[] tokenizeWords(String input)
+	{
+		return wordDetector.tokenize(input);
 	}
 }

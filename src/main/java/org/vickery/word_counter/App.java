@@ -15,8 +15,17 @@ public class App
     	}
     	else
     	{
-    		File inputFile = new File(args[0]); 
-    		new ConcordanceBuilder(inputFile).printConcordance();
+    		File inputFile = new File(args[0]);
+    		boolean useNLP = false;
+    		if(args.length==2)
+    		{
+    			try
+    			{
+    				useNLP = Boolean.parseBoolean(args[1]);
+    			}catch(Exception e){}
+    		}
+    			
+    		new ConcordanceBuilder(inputFile, useNLP).printConcordance();
     	}
     }
 }
